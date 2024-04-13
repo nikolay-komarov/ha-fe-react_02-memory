@@ -4,14 +4,22 @@
   <meta charset="UTF-8">
   <title>Игра Мемори</title>
   <link rel="stylesheet" href="css/style.css">
-  <!--подключите библиотеки React, ReactDOM и BabelJS-->
-  <!--подключите файл данных-->
+  <script src="vendor/react.development.js"></script>
+  <script src="vendor/react-dom.development.js"></script>
+  <script src="vendor/babel.min.js"></script>
 </head>
 <body>
   <div id="root">Корневой элемент</div>
+  
   <script type="text/babel">
     const container = document.getElementById('root');
-    // TODO: создайте корневой компонент приложения
+    const root = ReactDOM.createRoot(container);
+    root.render(<App/>);
+    
+    function App() {
+      return <div>Точка отсчёта для приложения</div>;
+    }
+    
     // TODO: создайте компонент карточки
     // TODO: передайте данные в компоненты
   </script>
