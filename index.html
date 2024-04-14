@@ -7,6 +7,7 @@
   <script src="vendor/react.development.js"></script>
   <script src="vendor/react-dom.development.js"></script>
   <script src="vendor/babel.min.js"></script>
+  <script src="data.js"></script>
 </head>
 <body>
   <div id="root">Корневой элемент</div>
@@ -14,39 +15,36 @@
   <script type="text/babel">
     const container = document.getElementById('root');
     const root = ReactDOM.createRoot(container);
-    root.render(<App/>);
+    root.render(<App images={images} visibleItems={visibleItems} finishedItems={finishedItems} />);
     
-    function App() {
+    function App({images = [], visibleItems = [] , finishedItems = []}) {
+      const cards = images.map((item) => (
+        <CardImage
+          url={item.url}
+          isShowed={visibleItems.includes(item.id)}
+          isFinished={finishedItems.includes(item.id)}
+          key={item.id}
+        />
+      ))
+      
       return (
         <section className="game container">
           <ul className="cards cards-theme-cars">
-            <CardImage url="img/cats-1.jpg" classNames="card card-show" />
-            <CardImage url="img/cats-2.jpg" classNames="card" />
-            <CardImage url="img/cats-3.jpg" classNames="card" />
-            <CardImage url="img/cats-4.jpg" classNames="card" />
-            <CardImage url="img/cats-5.jpg" classNames="card card-finished" />
-            <CardImage url="img/cats-6.jpg" classNames="card card-show" />
-            <CardImage url="img/cats-6.jpg" classNames="card" />
-            <CardImage url="img/cats-5.jpg" classNames="card card-finished" />
-            <CardImage url="img/cats-4.jpg" classNames="card" />
-            <CardImage url="img/cats-3.jpg" classNames="card" />
-            <CardImage url="img/cats-2.jpg" classNames="card" />
-            <CardImage url="img/cats-1.jpg" classNames="card" />
+            {cards}
           </ul>
         </section>
       );
     }
     
-    function CardImage({url, classNames}) {
+    function CardImage({url, isShowed = false, isFinished = false}) {
+      const className = `card ${isShowed ? 'card-show' : ''} ${isFinished ? 'card-finished' : ''}`;
+      
       return (
-        <li className={classNames}>
+        <li className={className}>
           <img src={url} width="204" height="144" alt="Котик"/>
         </li>
       );
     }
-    
-    // TODO: создайте компонент карточки
-    // TODO: передайте данные в компоненты
   </script>
 </body>
 </html>
