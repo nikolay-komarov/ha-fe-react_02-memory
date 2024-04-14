@@ -20,44 +20,28 @@
       return (
         <section className="game container">
           <ul className="cards cards-theme-cars">
-            <li className="card card-show">
-              <img src="img/cats-1.jpg" width="204" height="144" alt="Котик" />
-            </li>
-            <li className="card">
-              <img src="img/cats-2.jpg" width="204" height="144" alt="Котик" />
-            </li>
-            <li className="card">
-              <img src="img/cats-3.jpg" width="204" height="144" alt="Котик" />
-            </li>
-            <li className="card">
-              <img src="img/cats-4.jpg" width="204" height="144" alt="Котик" />
-            </li>
-            <li className="card card-finished">
-              <img src="img/cats-5.jpg" width="204" height="144" alt="Котик" />
-            </li>
-            <li className="card card-show">
-              <img src="img/cats-6.jpg" width="204" height="144" alt="Котик" />
-            </li>
-            <li className="card">
-              <img src="img/cats-6.jpg" width="204" height="144" alt="Котик" />
-            </li>
-            <li className="card card-finished">
-              <img src="img/cats-5.jpg" width="204" height="144" alt="Котик" />
-            </li>
-            <li className="card">
-              <img src="img/cats-4.jpg" width="204" height="144" alt="Котик" />
-            </li>
-            <li className="card">
-              <img src="img/cats-3.jpg" width="204" height="144" alt="Котик" />
-            </li>
-            <li className="card">
-              <img src="img/cats-2.jpg" width="204" height="144" alt="Котик" />
-            </li>
-            <li className="card">
-              <img src="img/cats-1.jpg" width="204" height="144" alt="Котик" />
-            </li>
+            <CardImage url="img/cats-1.jpg" classNames="card card-show" />
+            <CardImage url="img/cats-2.jpg" classNames="card" />
+            <CardImage url="img/cats-3.jpg" classNames="card" />
+            <CardImage url="img/cats-4.jpg" classNames="card" />
+            <CardImage url="img/cats-5.jpg" classNames="card card-finished" />
+            <CardImage url="img/cats-6.jpg" classNames="card card-show" />
+            <CardImage url="img/cats-6.jpg" classNames="card" />
+            <CardImage url="img/cats-5.jpg" classNames="card card-finished" />
+            <CardImage url="img/cats-4.jpg" classNames="card" />
+            <CardImage url="img/cats-3.jpg" classNames="card" />
+            <CardImage url="img/cats-2.jpg" classNames="card" />
+            <CardImage url="img/cats-1.jpg" classNames="card" />
           </ul>
         </section>
+      );
+    }
+    
+    function CardImage({url, classNames}) {
+      return (
+        <li className={classNames}>
+          <img src={url} width="204" height="144" alt="Котик"/>
+        </li>
       );
     }
     
