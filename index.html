@@ -28,17 +28,17 @@
     }
     
     function Grid({images, finishedItems}) {
-      const [visibleItems, setVisibleItems] = React.useState([]);
+      const [selectedItems, setSelectedItems] = React.useState([]);
       
       const handleCardClick = (id) => {
-        setVisibleItems([id]);
+        setSelectedItems((items) => [...items, id]);
       }
       
       const cards = images.map((item) => (
         <CardImage
           id={item.id}
           url={item.url}
-          isShowed={visibleItems.includes(item.id)}
+          isShowed={selectedItems.includes(item.id)}
           isFinished={finishedItems.includes(item.id)}
           onCardClick={handleCardClick}
           key={item.id}
