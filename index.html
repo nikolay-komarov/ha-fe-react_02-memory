@@ -18,21 +18,29 @@
     root.render(<App images={images} />);
     
     function App({images = []}) {
-      const visibleItems = ['YdAqiUkUoWA'];
       const finishedItems = ['hX_hf2lPpUU'];
       
       return (
         <section className="game container">
-          <Grid images={images} visibleItems={visibleItems} finishedItems={finishedItems} />
+          <Grid images={images} finishedItems={finishedItems} />
         </section>
       );
     }
     
     function Grid({images, finishedItems}) {
+      const [visibleItems, setVisibleItems] = React.useState([]);
+      
+      const handleCardClick = (id) => {
+        setVisibleItems([id]);
+      }
+      
       const cards = images.map((item) => (
         <CardImage
+          id={item.id}
           url={item.url}
+          isShowed={visibleItems.includes(item.id)}
           isFinished={finishedItems.includes(item.id)}
+          onCardClick={handleCardClick}
           key={item.id}
         />
       ));
@@ -44,13 +52,11 @@
       );
     }
     
-    function CardImage({url, isFinished = false}) {
-      const [isShowed, setSelected] = React.useState(false);
-      
+    function CardImage({id, url, isShowed = false, isFinished = false, onCardClick}) {
       const className = `card ${isShowed ? 'card-show' : ''} ${isFinished ? 'card-finished' : ''}`;
       
       const handleClick = () => {
-        setSelected(true);
+        onCardClick(id);
       }
       
       return (
