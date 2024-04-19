@@ -28,11 +28,10 @@
       );
     }
     
-    function Grid({images, visibleItems, finishedItems}) {
+    function Grid({images, finishedItems}) {
       const cards = images.map((item) => (
         <CardImage
           url={item.url}
-          isShowed={visibleItems.includes(item.id)}
           isFinished={finishedItems.includes(item.id)}
           key={item.id}
         />
@@ -45,11 +44,17 @@
       );
     }
     
-    function CardImage({url, isShowed = false, isFinished = false}) {
+    function CardImage({url, isFinished = false}) {
+      const [isShowed, setSelected] = React.useState(false);
+      
       const className = `card ${isShowed ? 'card-show' : ''} ${isFinished ? 'card-finished' : ''}`;
       
+      const handleClick = () => {
+        setSelected(true);
+      }
+      
       return (
-        <li className={className}>
+        <li className={className} onClick={handleClick}>
           <img src={url} width="204" height="144" alt="Котик"/>
         </li>
       );
