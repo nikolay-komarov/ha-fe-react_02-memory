@@ -10,7 +10,7 @@
   <script src="data.js"></script>
 </head>
 <body>
-  <div id="root">Корневой элемент</div>
+  <div id="root"></div>
   
   <script type="text/babel">
     const container = document.getElementById('root');
@@ -18,19 +18,34 @@
     root.render(<App images={images} />);
     
     function App({images = []}) {
-      const finishedItems = ['hX_hf2lPpUU'];
+      const [stepsCount, setStepsCount] = React.useState(0);
+      const checkItems = () => {
+        setStepsCount((count) => count + 1)
+      }
       
       return (
         <section className="game container">
-          <Grid images={images} finishedItems={finishedItems} />
+          <Count stepsCount={stepsCount}/>
+          <Grid images={images} checkItems={checkItems}/>
         </section>
       );
     }
     
-    function Grid({images, finishedItems}) {
+    function Count({stepsCount}) {
+      return (
+        <div className="steps">Шаг {stepsCount}</div>
+      );
+    }
+    
+    function Grid({images, finishedItems = [], checkItems}) {
       const [selectedItems, setSelectedItems] = React.useState([]);
       
       const handleCardClick = (id) => {
+        if (selectedItems.includes(id)) {
+          return;
+        }
+        
+        checkItems();
         setSelectedItems((items) => [...items, id]);
       }
       
@@ -56,6 +71,10 @@
       const className = `card ${isShowed ? 'card-show' : ''} ${isFinished ? 'card-finished' : ''}`;
       
       const handleClick = () => {
+        if (isFinished) {
+          return;
+        }
+        
         onCardClick(id);
       }
       
