@@ -10,27 +10,52 @@
   <script src="data.js"></script>
 </head>
 <body>
-  <div id="root">Корневой элемент</div>
+  <div id="root"></div>
   
   <script type="text/babel">
     const container = document.getElementById('root');
     const root = ReactDOM.createRoot(container);
-    root.render(<App images={images} visibleItems={visibleItems} finishedItems={finishedItems} />);
+    root.render(<App images={images} />);
     
-    function App({images = [], visibleItems = [], finishedItems = []}) {
+    function App({images = []}) {
+      const [stepsCount, setStepsCount] = React.useState(0);
+      const checkItems = () => {
+        setStepsCount((count) => count + 1)
+      }
+      
       return (
         <section className="game container">
-          <Grid images={images} visibleItems={visibleItems} finishedItems={finishedItems} />
+          <Count stepsCount={stepsCount}/>
+          <Grid images={images} checkItems={checkItems}/>
         </section>
       );
     }
     
-    function Grid({images, visibleItems, finishedItems}) {
+    function Count({stepsCount}) {
+      return (
+        <div className="steps">Шаг {stepsCount}</div>
+      );
+    }
+    
+    function Grid({images, finishedItems = [], checkItems}) {
+      const [selectedItems, setSelectedItems] = React.useState([]);
+      
+      const handleCardClick = (id) => {
+        if (selectedItems.includes(id)) {
+          return;
+        }
+        
+        checkItems();
+        setSelectedItems((items) => [...items, id]);
+      }
+      
       const cards = images.map((item) => (
         <CardImage
+          id={item.id}
           url={item.url}
-          isShowed={visibleItems.includes(item.id)}
+          isShowed={selectedItems.includes(item.id)}
           isFinished={finishedItems.includes(item.id)}
+          onCardClick={handleCardClick}
           key={item.id}
         />
       ));
@@ -42,11 +67,19 @@
       );
     }
     
-    function CardImage({url, isShowed = false, isFinished = false}) {
+    function CardImage({id, url, isShowed = false, isFinished = false, onCardClick}) {
       const className = `card ${isShowed ? 'card-show' : ''} ${isFinished ? 'card-finished' : ''}`;
       
+      const handleClick = () => {
+        if (isFinished) {
+          return;
+        }
+        
+        onCardClick(id);
+      }
+      
       return (
-        <li className={className}>
+        <li className={className} onClick={handleClick}>
           <img src={url} width="204" height="144" alt="Котик"/>
         </li>
       );
